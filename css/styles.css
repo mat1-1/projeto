@@ -1,0 +1,228 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  /* variáveis CSS */
+  --text-color: #fff;
+  --bg-config: linear-gradient(140deg, #18181bff, #232326ff);
+  --bg-filter: contrast(150%) brightness(90%);
+  --bg-noise: url(../assets/new-noise.svg);
+  --stroke-color: #ffffff50;
+  --surface-color: #ffffff10;
+  --surface-color-hover: #ffffff05;
+  --highlight-color: #ffffff20;
+  --switch-btn-bg-url: url(../assets/moon.svg);
+}
+.light {
+  --text-color: #000;
+  --bg-config: linear-gradient(
+    135deg,
+    rgba(248, 249, 250, 1),
+    rgba(238, 241, 246, 0.9)
+  );
+  --bg-filter: contrast(130%) brightness(100%);
+  --bg-noise: url(../assets/bg-darkmode-noise.svg);
+  --stroke-color: #00000050;
+  --surface-color: #00000005;
+  --surface-color-hover: #ffffff02;
+  --highlight-color: #00000010;
+  --switch-btn-bg-url: url(../assets/sun.svg);
+}
+
+body * {
+  font-family: "Inter", sans-serif;
+  color: var(--text-color);
+}
+body {
+  /* bg: color image repeat position /size */
+  /* background: var(--bg-url) no-repeat top center/cover; */
+
+  /* configurações do grainy gradients*/
+
+  background: var(--bg-config);
+  position: relative;
+}
+body::before {
+  content: ""; /* "conteúdo" adicionado ao pai */
+  position: absolute;
+  inset: 0; /* abreviação para todas as dimenções (top, right, bottom, left) */
+  background: var(--bg-noise);
+  filter: var(--bg-filter);
+  opacity: 0.1;
+  pointer-events: none; /* avisa o mouse que não deve interagir com o elemento, nesse caso sendo apenas uma definição de estilo */
+}
+#profile {
+  display: flex;
+  align-items: center;
+
+  width: 720px;
+  margin: 5px auto;
+
+  padding: 24px;
+  border: 1px solid red;
+}
+
+#profile img {
+  width: 112px;
+}
+
+#profile p {
+  font-weight: 500;
+  /* font-size: 16px; tamanho padrão do navegador */
+  line-height: 24px;
+  margin-top: 8px;
+}
+#btn {
+  border: none;
+  background: none;
+  margin: 0 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px;
+  border-radius: 50%;
+
+  font-weight: 500;
+  font-size: 24px;
+}
+#btn:hover {
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--highlight-color);
+}
+
+#btn:active {
+  font-weight: 700;
+}
+
+.hidden {
+  display: none;
+}
+
+#container {
+  width: 360px;
+  /* valores (top-bottom, sides) // (top, sides, bottom) // (top, right, bottom, left) */
+  margin: 56px auto 0;
+  padding: 0 24px;
+  border: 1px solid blue;
+}
+
+/* switch button */
+.switch {
+  /* div com display block (padrão) */
+  margin: 0 auto;
+  border: red solid 1px;
+
+  /* posicionamento em css -> quando o pai é definido como relative o posicionamento do filho (absolute) é limitado as dimenções do pai */
+  position: relative;
+  /* importante limitar as dimenções do elemento pai as do filho para facilitar o alinhamento e posicionamento dos layers */
+  width: 64px;
+}
+#switch-btn {
+  width: 32px;
+  height: 32px;
+
+  background: var(--switch-btn-bg-url) no-repeat center;
+  background-color: #fff;
+  border: none;
+
+  padding: 8px;
+  border-radius: 50%;
+
+  /* posicionamento no css -> z-index indica em qual layer está sendo crescente [0,1,2...] */
+
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+
+  /* alinhar layers usando transform */
+  /* desloca o elemento para cima em 50% de sua altura */
+  transform: translateY(-50%);
+  /* a nova altura do switch-btn 48px é o dobro da altura do tracker (24px), logo um ajuste de 50% centralizará o elemento verticalmente */
+  top: 50%;
+  /* posiciona na extrema esquerda (lugar que queremos q fique o switch-btn no darkmode)  */
+  left: 0;
+
+  /* para alinhar horizontalmente, mesma estratégia, porém no eixo x  */
+}
+
+.light #switch-btn {
+  right: 0;
+  left: initial; /* reseta o left para evitar conflitos com o right */
+}
+
+#tracker {
+  display: block;
+
+  width: 64px;
+  height: 24px;
+  border-radius: 9999px;
+
+  background: var(--surface-color);
+  border: 1px solid var(--stroke-color);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* listas */
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* espaço apenas ENTRE os elementos */
+}
+ul li a {
+  text-decoration: none;
+  font-weight: 500; /* bold */
+
+  display: flex;
+  justify-content: center;
+  align-items: center; /* centralizar na linha média */
+
+  border: 1px solid var(--stroke-color); /* hex+alfa (#rrggbbaa) */
+  border-radius: 8px;
+  background-color: var(--surface-color);
+
+  padding: 16px 24px;
+
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  transition: background 0.3s; /* troca entre o standaerd e o hover (oq muda) segundos */
+}
+
+ul li a:hover {
+  border: 1.5px solid var(--text-color);
+  background-color: var(--surface-color-hover);
+}
+
+/* social-links */
+#social-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 16px;
+  padding: 24px 0;
+}
+#social-links a {
+  font-size: 24px;
+
+  padding: 16px;
+  border-radius: 50%;
+
+  /* para facilitar a centralização e o calculo do padding no hover */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.2s;
+}
+
+#social-links a:hover {
+  background: var(--highlight-color);
+}

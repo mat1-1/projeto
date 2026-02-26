@@ -5,29 +5,25 @@
 }
 :root {
   /* variáveis CSS */
-  --text-color: #fff;
-  --bg-config: linear-gradient(140deg, #18181bff, #232326ff);
-  --bg-filter: contrast(150%) brightness(90%);
-  --bg-noise: url(../assets/new-noise.svg);
-  --stroke-color: #ffffff50;
-  --surface-color: #ffffff10;
-  --surface-color-hover: #ffffff05;
-  --highlight-color: #ffffff20;
+  --text-color: #f3f4f6ff;
+  --bg-config: linear-gradient(to right top, #18181bff, #2b2b32ff);
+  --bg-filter: contrast(150%) brightness(100%);
+  --bg-noise: url(../assets/bg-noise.svg);
+  --stroke-color: #ffffff1a;
+  --surface-color: #ffffff0d;
+  --surface-color-hover: #ffffff14;
+  --highlight-color: #ffffff14;
   --switch-btn-bg-url: url(../assets/moon.svg);
 }
 .light {
-  --text-color: #000;
-  --bg-config: linear-gradient(
-    135deg,
-    rgba(248, 249, 250, 1),
-    rgba(238, 241, 246, 0.9)
-  );
+  --text-color: #1f2937ff;
+  --bg-config: linear-gradient(to right top, #eceef1ff, #dde1e6ff);
   --bg-filter: contrast(130%) brightness(100%);
-  --bg-noise: url(../assets/bg-darkmode-noise.svg);
-  --stroke-color: #00000050;
-  --surface-color: #00000005;
-  --surface-color-hover: #ffffff02;
-  --highlight-color: #00000010;
+  --bg-noise: url(../assets/bg-noise.svg);
+  --stroke-color: #1f29371a;
+  --surface-color: #ffffff;
+  --surface-color-hover: #f3f4f6ff;
+  --highlight-color: #1f293714;
   --switch-btn-bg-url: url(../assets/sun.svg);
 }
 
@@ -42,6 +38,7 @@ body {
   /* configurações do grainy gradients*/
 
   background: var(--bg-config);
+  /* no caso de usar um background em formato de imagem é interessante usar a height: 100vh para garantir que a imagem ocupe toda a altura da tela, evitando que o fundo fique branco em telas maiores */
   position: relative;
 }
 body::before {
@@ -57,11 +54,14 @@ body::before {
   display: flex;
   align-items: center;
 
-  width: 720px;
   margin: 5px auto;
 
   padding: 24px;
   border: 1px solid red;
+
+  /* responsividade com diferentes dispositivos */
+  width: 100%;
+  max-width: 720px;
 }
 
 #profile img {
@@ -104,11 +104,14 @@ body::before {
 }
 
 #container {
-  width: 360px;
   /* valores (top-bottom, sides) // (top, sides, bottom) // (top, right, bottom, left) */
   margin: 56px auto 0;
   padding: 0 24px;
   border: 1px solid blue;
+
+  /* responsividade com diferentes dispositivos */
+  width: 100%;
+  max-width: 588px;
 }
 
 /* switch button */
@@ -122,6 +125,7 @@ body::before {
   /* importante limitar as dimenções do elemento pai as do filho para facilitar o alinhamento e posicionamento dos layers */
   width: 64px;
 }
+
 #switch-btn {
   width: 32px;
   height: 32px;
@@ -148,13 +152,20 @@ body::before {
   left: 0;
 
   /* para alinhar horizontalmente, mesma estratégia, porém no eixo x  */
+
+  /* css animation */
+  animation: slide-back 0.2s;
 }
 
 .light #switch-btn {
-  right: 0;
-  left: initial; /* reseta o left para evitar conflitos com o right */
+  animation: slide-forward 0.3s forwards;
+  /* right: 0;
+  left: initial; reseta o left para evitar conflitos com o right */
 }
 
+#switch-btn:hover {
+  outline: 8px solid var(--highlight-color);
+}
 #tracker {
   display: block;
 
@@ -225,4 +236,24 @@ ul li a:hover {
 
 #social-links a:hover {
   background: var(--highlight-color);
+}
+
+/* css animations */
+
+@keyframes slide-forward {
+  from {
+    left: 0;
+  }
+  to {
+    left: 50%;
+  }
+}
+
+@keyframes slide-back {
+  from {
+    left: 50%;
+  }
+  to {
+    left: 0;
+  }
 }

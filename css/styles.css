@@ -37,12 +37,17 @@ body {
 
   /* configurações do grainy gradients*/
 
+  /* garantir que a cor e o noise ocupem 100% da viewport // agora que o body tem 100vw e 100vh tanto a cor quanto o noise ocuparão toda a viewport  */
+  width: 100vw;
+  height: 100vh;
+
   background: var(--bg-config);
   /* no caso de usar um background em formato de imagem é interessante usar a height: 100vh para garantir que a imagem ocupe toda a altura da tela, evitando que o fundo fique branco em telas maiores */
   position: relative;
 }
 body::before {
   content: ""; /* "conteúdo" adicionado ao pai */
+
   position: absolute;
   inset: 0; /* abreviação para todas as dimenções (top, right, bottom, left) */
   background: var(--bg-noise);
